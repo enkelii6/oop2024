@@ -6,24 +6,10 @@ public class ex3 {
         private int minute;
         private int second;
 
-        public Time(int hour, int minute, int second) throws TimeException {
-            if (hour <= 24 & hour >= 0 ) {
-                this.hour = hour;
-            } else {
-                throw new TimeException("Please provide a valid hour (0-24)");
-            }
-
-            if (minute <= 59 & minute >= 0) {
-                this.minute = minute;
-            } else {
-                throw new TimeException("Please provide a valid minute (0-59)");
-            }
-
-            if (second <= 59 & second >= 0) {
-                this.second = second;
-            } else {
-                throw new TimeException("Please provide a valid second (0-59)");
-            }
+        public Time(int hour, int minute, int second) {
+            this.hour = hour % 24;
+            this.minute = minute % 60;
+            this.second = second % 60;
         }
 
         public String toUniversal() {
@@ -39,30 +25,13 @@ public class ex3 {
         }
 
         public void add(Time time) {
-            this.hour += time.hour;
-            this.minute += time.minute;
-            this.second += time.second;
-
-            if (this.second >= 60) {
-                this.second -= 60;
-            }
-            if (this.minute >= 60) {
-                this.minute -= 60;
-            }
-            if (this.hour >= 24) {
-                this.hour -= 24;
-            }
+            this.hour += time.hour % 24;
+            this.minute += time.minute % 60;
+            this.second += time.second % 60;
         }
     }
 
-
-    public static class TimeException extends Exception {
-        public TimeException(String message) {
-            super();
-        }
-    }
-
-    public static void main(String[] args) throws TimeException {
+    public static void main(String[] args) {
         Time t1 = new Time(16, 10, 0);
         Time t2 = new Time(9, 10, 1);
 
